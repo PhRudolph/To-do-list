@@ -1,0 +1,41 @@
+input{
+    width : 75%;
+    height: 33px;
+    border: none;
+    margin-right: -4px;
+    border: none;
+}
+button{
+    width: 15%;
+    height: 35px;
+    border: none;
+}
+ul{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+li{
+    text-align: center;
+    width: 100%;
+    list-style-type: none;
+    padding : 10px 0px;
+}
+.panstraight{
+    background-color:rgb(221, 220, 220);
+}
+.panodd{
+    background-color:rgb(243, 243, 243);
+}
+.content{
+    width: 50%;
+    margin: 0px 25%;
+    text-align: center;
+}
+.upperarea{
+    text-align: center;
+    color: white;
+    background-color: slateblue;
+    padding: 10px;
+    margin: 0px;
+}
