@@ -1,31 +1,13 @@
 input{
     width : 75%;
     height: 33px;
-    border: none;
-    margin-right: -4px;
+    margin-right: -5px;
     border: none;
 }
 button{
     width: 15%;
     height: 35px;
     border: none;
-}
-ul{
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-}
-li{
-    text-align: center;
-    width: 100%;
-    list-style-type: none;
-    padding : 10px 0px;
-}
-.panstraight{
-    background-color:rgb(221, 220, 220);
-}
-.panodd{
-    background-color:rgb(243, 243, 243);
 }
 .content{
     width: 50%;
@@ -35,7 +17,50 @@ li{
 .upperarea{
     text-align: center;
     color: white;
-    background-color: slateblue;
-    padding: 10px;
+    background-color: darkslateblue;
+    padding: 15px;
     margin: 0px;
+}
+ul{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    text-align: left;
+}
+li{
+    width: 100%;
+    list-style-type: none;
+    padding: 10px 0px;
+    height: 20px;
+}
+.lihover:hover{
+    background-color:rgb(196, 193, 193);
+}
+li:active:hover{
+    background-color: grey;
+}
+tr{
+    width: 100%;
+}
+td{
+    padding: 0px 20px;
+}
+.coleven{
+    background-color:rgb(221, 220, 220);
+}
+.colodd{
+    background-color:rgb(243, 243, 243);
+}
+.checked{
+    background-color:darkgrey;
+}
+.checkbox{
+    width: 5px;
+}
+.midli{
+    width: 80%;
+}
+.x{
+    width: 5%;
+    text-align: right;
 }
