@@ -22,7 +22,7 @@ function add() {                                                            //fu
         condiv.classList.add("midli");
         xdiv.classList.add("x");
         li.classList.add("lihover");
-        li.setAttribute("onclick", "checkcheck(this.id)");
+        li.setAttribute("onclick", "checkcheck(this)");
         xdiv.setAttribute("onmousedown", "remove(this)");
         li.setAttribute("draggable", "true");
         li.setAttribute("ondragstart", "dragbegin(event)");
@@ -51,33 +51,28 @@ function add() {                                                            //fu
 }
 
                                                                             //Check:
-function checkcheck(panelid) {                                              //function that checks, if the panel is checked.
-    
-    var li = document.getElementById(panelid);
-
+function checkcheck(li) {                                              //function that checks, if the panel is checked.
     var checkcheck = li.classList.contains("checked");
     if (checkcheck == false) {
-        docheck(panelid);
+        docheck(li);
     } else {
-        undocheck(panelid);
+        undocheck(li);
     }
 }
-function docheck(panelid) {                                                 //function that adds checkmark and removes placeholder
-    var li = document.getElementById(panelid);
+function docheck(li) {                                                 //function that adds checkmark and removes placeholder
     li.classList.add("checked");
     li.classList.remove("lihover");
 
     var checkmark = document.createTextNode("\u2714");
-    var checkdiv = document.getElementById("chk" + panelid);
+    var checkdiv = li.childNodes[0];
     checkdiv.removeChild(checkdiv.childNodes[0]);
     checkdiv.appendChild(checkmark);
 }
-function undocheck(panelid) {                                               //function that removes checkmark and recreats placeholder
-    var li = document.getElementById(panelid);
+function undocheck(li) {                                               //function that removes checkmark and recreats placeholder
     li.classList.remove("checked");
     li.classList.add("lihover");
 
-    var checkdiv = document.getElementById("chk" + panelid);
+    var checkdiv = li.childNodes[0];
     checkdiv.removeChild(checkdiv.childNodes[0]);
     var placeholder = document.createTextNode("\u2063");
     checkdiv.appendChild(placeholder);
@@ -85,10 +80,9 @@ function undocheck(panelid) {                                               //fu
 
                                                                             //Removal:
 function remove(xdiv) {                                                     //function that removes an LI panel
-    var panelid = xdiv.parentNode.id;
-    var li = document.getElementById(panelid);
+    var li = xdiv.parentNode;
     li.remove();
-    console.log("removed: " + panelid);
+    console.log("removed: " + li.id);
     assign();                                                               //reassign ids to fill potential gap
 }
                                                                             //Generate/assign Ids:
@@ -106,7 +100,7 @@ function assign() {                                                         //fu
         var checkdiv = innerli[0];
         var condiv = innerli[1];
         var xdiv = innerli[2];
-        if (li.id != lpplus){
+        if (li.id != lpplus){                                               //if the id is incorrect, reassign it
             li.id = lpplus;
             checkdiv.id = "chk" + lpplus;
             condiv.id = "licon" + lpplus;
