@@ -52,10 +52,11 @@ function add() {                                                            //fu
 
                                                                             //Check:
 function checkcheck(panelid) {                                              //function that checks, if the panel is checked.
+    
     var li = document.getElementById(panelid);
 
     var checkcheck = li.classList.contains("checked");
-    if (checkcheck == false) {                                              
+    if (checkcheck == false) {
         docheck(panelid);
     } else {
         undocheck(panelid);
@@ -95,33 +96,31 @@ function assign() {                                                         //fu
     var ul = document.getElementById("list");
     var elements = Array.from(ul.children);                                 //creates array with every LI panel
     lplen = elements.length;
-    console.log("_______new loop length " + lplen);
+    console.log("assign loop with length " + lplen);
 
     for (var lp = 0; lp < lplen; lp++){                                     //loop that goes through every LI panel and the elements inside the array
-        console.log("loop " + lp + ":");
-        var lpone = +lp + +1;
+        var lpplus = +lp + +1;
 
         var li = elements[lp];                                              //gets LI panel in question and its elements from the array
         var innerli = li.children;
         var checkdiv = innerli[0];
         var condiv = innerli[1];
         var xdiv = innerli[2];
+        if (li.id != lpplus){
+            li.id = lpplus;
+            checkdiv.id = "chk" + lpplus;
+            condiv.id = "licon" + lpplus;
+            xdiv.id = "x" + lpplus;
+            console.log("assigned id " + li.id);
+        }
 
-        li.id = lpone;
-        checkdiv.id = "chk" + lpone;
-        condiv.id = "licon" + lpone;
-        xdiv.id = "x" + lpone;
-
-        console.log("assigned id " + li.id);                                //assigns different classes/bgcolor to the LI panel to form a pattern
-        if (li.id % 2 == 0) {
+        if (li.id % 2 == 0) {                                               //assigns different classes/bgcolor to the LI panel to form a pattern
             li.classList.remove("colodd");
             li.classList.add("coleven");
-            console.log("even color assigned to id " + li.id)
         }
         if (li.id % 2 == 1) {
             li.classList.remove("coleven");
             li.classList.add("colodd");
-            console.log("odd color assigned to ids " + li.id)
         }
     }
 }
@@ -136,20 +135,22 @@ function allow(event) {
 function drop(event) {
     event.preventDefault();
     var tmid = event.dataTransfer.getData("text");
-    var tmcon = document.getElementById(tmid);
+    var ul = document.getElementById("list");
+    var li = event.target.closest("li");
+    newli = document.getElementById(tmid);
+    if(tmid > li.id){
+        ul.insertBefore(newli, li);
+    }if(tmid < li.id){
+        ul.insertBefore(newli, li);
+        ul.insertBefore(li, newli);
+    }
 
-    var newdiv = document.createTextNode(tmcon);
-
-    var li = event.target;
-    var olddiv = li.childNodes[0];
-
-    li.replaceChild(tmcon, olddiv);
+    assign();
 
 }
 
-let ul = document.getElementById("list");
 function ulonclick(event) {
-    let li = event.target.closest("li");                                    // get reference by using closest
+                                                                        // get reference by using closest
 
     let nodes = Array.from(li.closest('ul').children);                      // get array
     let index = nodes.indexOf(li);
