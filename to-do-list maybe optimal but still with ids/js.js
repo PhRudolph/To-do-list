@@ -36,8 +36,6 @@ function add() {                                                            //fu
 
         assign();
 
-        console.log("added with id: " + li.id + " confirmed");
-
         var input = document.getElementById("input").value;                 //fills div elements
         var text = document.createTextNode(input);
         condiv.appendChild(text);
@@ -61,6 +59,8 @@ function checkcheck(li) {                                                   //fu
 }
 function docheck(li) {                                                      //function that adds checkmark and removes placeholder
     li.classList.add("checked");
+    var condiv = li.childNodes[1];
+    condiv.classList.add("line");
     li.classList.remove("lihover");
 
     var checkmark = document.createTextNode("\u2714");
@@ -70,6 +70,8 @@ function docheck(li) {                                                      //fu
 }
 function undocheck(li) {                                                    //function that removes checkmark and recreats placeholder
     li.classList.remove("checked");
+    var condiv = li.childNodes[1];
+    condiv.classList.remove("line");
     li.classList.add("lihover");
 
     var checkdiv = li.childNodes[0];
@@ -82,72 +84,55 @@ function undocheck(li) {                                                    //fu
 function remove(xdiv) {                                                     //function that removes an LI panel
     var li = xdiv.parentNode;
     li.remove();
-    console.log("removed: " + li.id);
     assign();                                                               //reassign ids to fill potential gap
 }
                                                                             //Generate/assign Ids:
 function assign() {                                                         //function that assigns ids/classes to the LI panels and the elements inside them
     var ul = document.getElementById("list");
-    var elements = Array.from(ul.children);                                 //creates array with every LI panel
-    lplen = elements.length;
-    console.log("assign loop with length " + lplen);
+    var ulements = Array.from(ul.children);                                 //creates array with every LI panel
+    lplen = ulements.length;
 
-    for (var lp = 0; lp < lplen; lp++){                                     //loop that goes through every LI panel and the elements inside the array
+    for (var lp = 0; lp < lplen; lp++){                                     //loop that goes through every LI panel and the ulements inside the array
         var lpplus = +lp + +1;
-
-        var li = elements[lp];                                              //gets LI panel in question and its elements from the array
-        var innerli = li.children;
-        var checkdiv = innerli[0];
-        var condiv = innerli[1];
-        var xdiv = innerli[2];
+        var li = ulements[lp];                                              //gets LI panel in question and its index from the array
+        var liindex = ulements.indexOf(li);
+        
         if (li.id != lpplus){                                               //if the id is incorrect, reassign it
             li.id = lpplus;
-            checkdiv.id = "chk" + lpplus;
-            condiv.id = "licon" + lpplus;
-            xdiv.id = "x" + lpplus;
-            console.log("assigned id " + li.id);
         }
-
-        if (li.id % 2 == 0) {                                               //assigns different classes/bgcolor to the LI panel to form a pattern
+        if (liindex % 2 == 0) {                                             //assigns different classes/bgcolor to the LI panel to form a pattern
             li.classList.remove("colodd");
             li.classList.add("coleven");
         }
-        if (li.id % 2 == 1) {
+        if (liindex % 2 == 1) {
             li.classList.remove("coleven");
             li.classList.add("colodd");
         }
     }
 }
-
                                                                             //Drag and Drop:
-function dragbegin(event){                                                  //Work in Progress
-    event.dataTransfer.setData("text", event.target.id)
+function dragbegin(event){                                                  //function that sets the data that shall be transfered on the drag event
+    event.dataTransfer.setData("text", event.target.id)                             //in this case the entire LI panel
 }
-function allow(event) {
-    event.preventDefault();
+function allow(event) {                                                     //when hovering over an area with a draggable object, nothing will happen by default
+    event.preventDefault();                                                 //so this needs to be prevented
 }
-function drop(event) {
+function drop(event) {                                                      //function that on drop 
     event.preventDefault();
-    var tmid = event.dataTransfer.getData("text");
+    var newid = event.dataTransfer.getData("text");                         //currently still uses ID to get the dragged object
     var ul = document.getElementById("list");
+    var newli = document.getElementById(newid);
     var li = event.target.closest("li");
-    newli = document.getElementById(tmid);
-    if(tmid > li.id){
+
+    var ulements = Array.from(ul.children);                                 //but indexes for smoother placement of the dragged object
+    var liindex = ulements.indexOf(li);
+    var newliindex = ulements.indexOf(newli);
+
+    if(newliindex > liindex){                                               //if its dragged from below, just insert the new before the old
         ul.insertBefore(newli, li);
-    }if(tmid < li.id){
+    }if(newliindex < liindex){                                              //if its dragged from above, insert the new before the old and then the old before the new
         ul.insertBefore(newli, li);
         ul.insertBefore(li, newli);
     }
-
     assign();
-
-}
-
-let ul = document.getElementById('squareList');
-ul.dontdoit = function(event) {
-  let target = getEventTarget(event);
-  let li = target.closest('li');                                            // get reference by using closest
-  let nodes = Array.from( li.closest('ul').children );                      // get array
-  let index = nodes.indexOf( li ); 
-  alert(index);
 }

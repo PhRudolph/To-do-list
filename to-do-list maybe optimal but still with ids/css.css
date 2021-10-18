@@ -54,6 +54,9 @@ td{
 .checked{
     background-color:darkgrey;
 }
+.line{
+    text-decoration: line-through;
+}
 .checkbox{
     width: 5px;
     margin-left: 2px;
