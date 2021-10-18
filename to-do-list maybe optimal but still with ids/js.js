@@ -50,8 +50,8 @@ function add() {                                                            //fu
     document.getElementById("input").value = "";                            //just clears the textfield. No touchy
 }
 
-                                                                            //Check:
-function checkcheck(li) {                                              //function that checks, if the panel is checked.
+                                                                            //Checkmark:
+function checkcheck(li) {                                                   //function that checks, if the panel is checked.
     var checkcheck = li.classList.contains("checked");
     if (checkcheck == false) {
         docheck(li);
@@ -59,7 +59,7 @@ function checkcheck(li) {                                              //functio
         undocheck(li);
     }
 }
-function docheck(li) {                                                 //function that adds checkmark and removes placeholder
+function docheck(li) {                                                      //function that adds checkmark and removes placeholder
     li.classList.add("checked");
     li.classList.remove("lihover");
 
@@ -68,7 +68,7 @@ function docheck(li) {                                                 //functio
     checkdiv.removeChild(checkdiv.childNodes[0]);
     checkdiv.appendChild(checkmark);
 }
-function undocheck(li) {                                               //function that removes checkmark and recreats placeholder
+function undocheck(li) {                                                    //function that removes checkmark and recreats placeholder
     li.classList.remove("checked");
     li.classList.add("lihover");
 
@@ -143,9 +143,11 @@ function drop(event) {
 
 }
 
-function ulonclick(event) {
-                                                                        // get reference by using closest
-
-    let nodes = Array.from(li.closest('ul').children);                      // get array
-    let index = nodes.indexOf(li);
+let ul = document.getElementById('squareList');
+ul.dontdoit = function(event) {
+  let target = getEventTarget(event);
+  let li = target.closest('li');                                            // get reference by using closest
+  let nodes = Array.from( li.closest('ul').children );                      // get array
+  let index = nodes.indexOf( li ); 
+  alert(index);
 }
